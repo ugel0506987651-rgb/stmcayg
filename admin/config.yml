@@ -2,6 +2,7 @@ backend:
   name: github
   repo: ugel0506987651-rgb/stmcayg
   branch: main
+  base_url: https://decapcms.org
 
 media_folder: "images"
 
