@@ -1,0 +1,17 @@
+backend:
+  name: github
+  repo: ugel0506987651-rgb/stmcayg
+  branch: main
+
+media_folder: "images"
+
+collections:
+  - name: "pages"
+    label: "Страницы"
+    files:
+      - label: "Главная страница"
+        name: index
+        file: index.html
+        fields:
+          - {label: Заголовок, name: title, widget: string}
+          - {label: Текст, name: body, widget: markdown}
