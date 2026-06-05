@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -72,14 +73,79 @@
   }
   nav.scrolled { background: rgba(10,14,26,0.98); border-bottom: 1px solid rgba(201,168,76,0.2); }
   .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+  .nav-logo img { height: 38px; width: auto; }
+  .nav-logo-text {
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 700;
     letter-spacing: 2px;
     color: var(--gold);
-    text-decoration: none;
   }
   .nav-logo span { color: var(--text); }
+
+  /* MODAL */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .modal-overlay.active { display: flex; }
+  .modal {
+    background: var(--dark2);
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 8px;
+    max-width: 700px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+  }
+  .modal-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; border-radius: 8px 8px 0 0; }
+  .modal-body { padding: 32px; }
+  .modal-close {
+    position: absolute;
+    top: 16px; right: 16px;
+    background: rgba(0,0,0,0.6);
+    border: none;
+    color: white;
+    font-size: 24px;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 10;
+  }
+  .modal-tag {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+  .modal-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+  .modal-desc { font-size: 15px; color: var(--text-muted); line-height: 1.8; margin-bottom: 24px; }
+  .modal-details { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+  .modal-detail { background: var(--dark3); padding: 16px; border-radius: 4px; border: 1px solid rgba(201,168,76,0.1); }
+  .modal-detail-label { font-size: 11px; color: var(--gold); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+  .modal-detail-value { font-size: 14px; font-weight: 500; }
+  .project-media { cursor: pointer; }
   .nav-links { display: flex; gap: 32px; list-style: none; }
   .nav-links a {
     color: var(--text-muted);
@@ -594,7 +660,10 @@
 
 <!-- NAV -->
 <nav id="navbar">
-  <a href="#hero" class="nav-logo">STMC <span>&</span> AYG</a>
+  <a href="#hero" class="nav-logo">
+    <img src="https://res.cloudinary.com/dc59gdahu/image/upload/v1780573281/IMG-20260525-WA0009_tutr57.jpg" alt="STMC AYG Logo">
+    <span class="nav-logo-text">STMC <span>&</span> AYG</span>
+  </a>
   <ul class="nav-links">
     <li><a href="#about" data-i18n="nav_about">À propos</a></li>
     <li><a href="#services" data-i18n="nav_services">Services</a></li>
@@ -764,14 +833,14 @@
           </div>
         </div>
       </div>
-      <div class="project-card">
+      <div class="project-card" onclick="openModal('hospital')">
         <div class="project-media">
-          <img src="https://res.cloudinary.com/dc59gdahu/image/upload/v1780552597/IMG-20260525-WA0006_mhcdz9.jpg" alt="Projet Hôpital CD13">
+          <img src="https://res.cloudinary.com/dc59gdahu/image/upload/v1780552597/IMG-20260525-WA0006_mhcdz9.jpg" alt="Centre de Cardiologie de Bangui">
           <div class="project-badge" data-i18n="badge_active">En Cours</div>
         </div>
         <div class="project-body">
           <h3 data-i18n="proj2_title">Centre de Cardiologie de Bangui</h3>
-          <p data-i18n="proj2_desc">Construction d'un complexe médical moderne dans le cadre du corridor CD13. Infrastructure de santé de référence destinée à desservir les populations de la sous-région centrafricaine.</p>
+          <p data-i18n="proj2_desc">Construction d'un centre de cardiologie de référence à Bangui, objet social du projet CD13 financé par la Banque Africaine de Développement.</p>
           <div class="project-tags">
             <span class="tag" data-i18n="t_med">Médecine</span>
             <span class="tag">CD13</span>
@@ -898,6 +967,37 @@
     </div>
   </div>
 </section>
+
+<!-- MODAL HOSPITAL -->
+<div class="modal-overlay" id="modal-hospital" onclick="closeModal(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="document.getElementById('modal-hospital').classList.remove('active')">✕</button>
+    <img class="modal-img" src="https://res.cloudinary.com/dc59gdahu/image/upload/v1780552597/IMG-20260525-WA0006_mhcdz9.jpg" alt="Centre de Cardiologie de Bangui">
+    <div class="modal-body">
+      <div class="modal-tag">Projet CD13 · En Cours</div>
+      <h2 class="modal-title">Centre de Cardiologie de Bangui</h2>
+      <p class="modal-desc">Le Centre de Cardiologie de Bangui est l'un des objets sociaux du projet CD13 (Corridor 13) — un projet de développement du corridor de transport multimodal Pointe-Noire – Brazzaville – Bangui – N'Djamena, financé principalement par la Banque Africaine de Développement (BAD).<br><br>Ce centre de référence régionale est conçu pour offrir des soins cardiologiques spécialisés aux populations de la République Centrafricaine et de la sous-région, dans le cadre du développement des infrastructures sociales du corridor CD13.</p>
+      <div class="modal-details">
+        <div class="modal-detail">
+          <div class="modal-detail-label">Financement</div>
+          <div class="modal-detail-value">Banque Africaine de Développement</div>
+        </div>
+        <div class="modal-detail">
+          <div class="modal-detail-label">Localisation</div>
+          <div class="modal-detail-value">Bangui, République Centrafricaine</div>
+        </div>
+        <div class="modal-detail">
+          <div class="modal-detail-label">Secteur</div>
+          <div class="modal-detail-value">Médecine & Santé</div>
+        </div>
+        <div class="modal-detail">
+          <div class="modal-detail-label">Statut</div>
+          <div class="modal-detail-value">En cours de réalisation</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- FOOTER -->
 <footer>
@@ -1102,6 +1202,17 @@ function setLang(lang) {
     if (i18n[lang][key]) el.textContent = i18n[lang][key];
   });
   document.documentElement.lang = lang;
+}
+
+function openModal(id) {
+  document.getElementById('modal-' + id).classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(e) {
+  if (e.target.classList.contains('modal-overlay')) {
+    e.target.classList.remove('active');
+    document.body.style.overflow = '';
+  }
 }
 
 // NAV SCROLL
